@@ -402,21 +402,193 @@ a.sticker:focus-visible { outline: 3px dashed #141414; outline-offset: 4px; }
   z-index: 5;
 }
 
-/* Hero 背景中央的大小鸡 */
+/* Hero 背景中央的大小鸡（CSS 手绘，失落 ↔ 开心两态） */
 .hero-chicken {
   position: absolute;
   left: 50%;
-  top: 52%;
-  z-index: 0;
-  font-size: clamp(9rem, 24vw, 17rem);
-  line-height: 1;
-  pointer-events: none;
-  filter: drop-shadow(0 12px 0 rgba(20, 20, 20, 0.12));
+  top: 53%;
+  width: clamp(180px, 24vw, 290px);
+  z-index: 2;
+  pointer-events: auto;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 16px 0 rgba(20, 20, 20, 0.12));
   animation: chicken-bob 4.5s ease-in-out infinite;
 }
 @keyframes chicken-bob {
-  0%, 100% { transform: translate(-50%, -50%) rotate(-5deg); }
-  50% { transform: translate(-50%, -54%) rotate(5deg); }
+  0%, 100% { transform: translate(-50%, -50%) rotate(-3deg); }
+  50% { transform: translate(-50%, -53%) rotate(3deg); }
+}
+.hero-chicken.is-happy { animation: chicken-hop 0.5s ease-in-out infinite alternate; }
+@keyframes chicken-hop {
+  from { transform: translate(-50%, -50%) scale(1); }
+  to { transform: translate(-50%, -56%) scale(1.05); }
+}
+
+.chick-body {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 0.94;
+  border-radius: 48% 48% 45% 45%;
+  background: radial-gradient(circle at 35% 30%, #FFE38A, #FFC93C 62%, #F3B21D);
+}
+.chick-wing {
+  position: absolute;
+  top: 40%;
+  width: 27%;
+  height: 36%;
+  background: radial-gradient(circle at 40% 30%, #FFDE73, #EFAB1C);
+  border-radius: 60% 40% 50% 50%;
+  transform-origin: top center;
+  transition: transform 0.3s ease;
+  z-index: 1;
+}
+.chick-wing-l { left: -8%; transform: rotate(26deg); }
+.chick-wing-r { right: -8%; transform: rotate(-26deg); }
+.hero-chicken.is-happy .chick-wing-l { animation: flap-l 0.28s ease-in-out infinite alternate; }
+.hero-chicken.is-happy .chick-wing-r { animation: flap-r 0.28s ease-in-out infinite alternate; }
+@keyframes flap-l {
+  from { transform: rotate(26deg); }
+  to { transform: rotate(-42deg) translateY(-8%); }
+}
+@keyframes flap-r {
+  from { transform: rotate(-26deg); }
+  to { transform: rotate(42deg) translateY(-8%); }
+}
+
+.chick-eye {
+  position: absolute;
+  top: 33%;
+  width: 7.5%;
+  height: 10%;
+  background: #333;
+  border-radius: 50%;
+  transition: all 0.25s ease;
+}
+.chick-eye-l { left: 27%; }
+.chick-eye-r { right: 27%; }
+/* 失落：眯成下垂的小缝 */
+.hero-chicken:not(.is-happy) .chick-eye-l {
+  height: 4%; top: 39%;
+  border-radius: 30% 30% 60% 60%;
+  transform: rotate(16deg);
+}
+.hero-chicken:not(.is-happy) .chick-eye-r {
+  height: 4%; top: 39%;
+  border-radius: 30% 30% 60% 60%;
+  transform: rotate(-16deg);
+}
+/* 开心：弯弯笑眼 ^ */
+.hero-chicken.is-happy .chick-eye {
+  height: 8%;
+  background: transparent;
+  border-top: 4px solid #333;
+  border-radius: 50% 50% 0 0;
+}
+
+.chick-blush {
+  position: absolute;
+  top: 47%;
+  width: 13%;
+  height: 7%;
+  background: rgba(255, 110, 110, 0.6);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.chick-blush-l { left: 16%; }
+.chick-blush-r { right: 16%; }
+.hero-chicken.is-happy .chick-blush { opacity: 1; }
+
+.chick-beak {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  width: 11%;
+  height: 9%;
+  transform: translateX(-50%);
+  background: linear-gradient(#FF9A3C, #F07B1C);
+  border-radius: 25% 25% 65% 65%;
+  transition: all 0.25s ease;
+}
+.hero-chicken.is-happy .chick-beak {
+  top: 41%;
+  height: 11%;
+  background: linear-gradient(#FF9A3C 52%, #E4652F 52%);
+}
+
+.chick-tear {
+  position: absolute;
+  top: 41%;
+  left: 23%;
+  width: 7%;
+  height: 10%;
+  background: linear-gradient(#8FD8FF, #4FB3F0);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  opacity: 0;
+}
+.hero-chicken:not(.is-happy) .chick-tear { animation: tear-drop 3s ease-in infinite; }
+@keyframes tear-drop {
+  0% { opacity: 0; transform: translateY(0) scale(0.6); }
+  15% { opacity: 1; }
+  70% { opacity: 1; transform: translateY(300%) scale(1); }
+  100% { opacity: 0; transform: translateY(340%) scale(0.8); }
+}
+
+.chick-feet {
+  position: absolute;
+  bottom: -2.5%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 14%;
+  width: 38%;
+}
+.chick-feet span {
+  display: block;
+  flex: 1;
+  height: clamp(6px, 1vw, 11px);
+  background: #F07B1C;
+  border-radius: 4px 4px 8px 8px;
+}
+
+.chick-bubble {
+  position: absolute;
+  top: -7%;
+  left: -36%;
+  background: var(--paper);
+  border: 2.5px solid var(--ink);
+  border-radius: 16px;
+  padding: 0.4rem 1rem;
+  font-weight: 700;
+  font-size: clamp(0.95rem, 1.6vw, 1.25rem);
+  color: var(--ink);
+  white-space: nowrap;
+  box-shadow: 3px 3px 0 var(--ink);
+  transform: rotate(-4deg);
+  animation: bubble-float 3s ease-in-out infinite;
+  z-index: 3;
+}
+.chick-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -9px;
+  right: 22%;
+  width: 14px;
+  height: 14px;
+  background: var(--paper);
+  border-right: 2.5px solid var(--ink);
+  border-bottom: 2.5px solid var(--ink);
+  transform: rotate(45deg);
+}
+.hero-chicken.is-happy .chick-bubble {
+  background: var(--green);
+  color: #141414;
+  animation-duration: 0.9s;
+}
+@keyframes bubble-float {
+  0%, 100% { transform: rotate(-4deg) translateY(0); }
+  50% { transform: rotate(-4deg) translateY(-7px); }
 }
 
 /* ---------- 跑马灯 ---------- */

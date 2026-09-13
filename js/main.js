@@ -87,6 +87,20 @@
     });
   }
 
+  /* ---------- 首页小鸡互动：失落 ↔ 开心 ---------- */
+  var chick = document.getElementById('hero-chicken');
+  var chickBubble = document.getElementById('chick-bubble');
+  if (chick && chickBubble) {
+    chick.addEventListener('mouseenter', function () {
+      chick.classList.add('is-happy');
+      chickBubble.textContent = '你来了！嘿嘿';
+    });
+    chick.addEventListener('mouseleave', function () {
+      chick.classList.remove('is-happy');
+      chickBubble.textContent = '想你了';
+    });
+  }
+
   /* ---------- 标题彩蛋：切走标签页时卖个萌 ---------- */
   var originalTitle = document.title;
   document.addEventListener('visibilitychange', function () {
