@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>关于我 · 小鸡面</title>
+  <meta name="description" content="关于小鸡面：创意开发者，把奇怪的想法做成好玩的东西。">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐥</text></svg>">
+  <script>document.documentElement.dataset.theme = localStorage.getItem('theme') || 'light';document.documentElement.classList.add('js');</script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="site-header">
+    <nav class="nav container" aria-label="主导航">
+      <a class="logo" href="index.html">小鸡面<span class="logo-dot">.</span></a>
+      <button class="nav-toggle" aria-label="打开菜单" aria-expanded="false" aria-controls="nav-menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-menu" id="nav-menu">
+        <a class="nav-link" href="index.html">首页</a>
+        <a class="nav-link" href="works.html">作品</a>
+        <a class="nav-link" href="blog.html">博客</a>
+        <a class="nav-link is-active" href="about.html" aria-current="page">关于</a>
+        <button class="theme-toggle" aria-label="切换深浅色主题">🌙</button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="page-hero container">
+      <h1 class="page-title reveal">关于我 <span class="en">ABOUT ✦</span></h1>
+      <p class="page-sub reveal" style="--d:.1s">
+        一个把「有趣」当作生产力的人。
+      </p>
+    </section>
+
+    <section class="section" style="padding-top: 1rem;">
+      <div class="container">
+        <div class="profile-grid">
+          <!-- 左：名片 -->
+          <aside class="profile-card reveal">
+            <div class="profile-avatar">🐥</div>
+            <div class="profile-name">小鸡面</div>
+            <div class="profile-role">创意开发者 / 业余设计师</div>
+            <div class="facts">
+              <div class="fact"><b>📍 坐标</b><span>杭州</span></div>
+              <div class="fact"><b>💼 状态</b><span>开放有趣的项目合作</span></div>
+              <div class="fact"><b>🎧 正在听</b><span>City Pop 与城市白噪音</span></div>
+              <div class="fact"><b>🌱 最近在学</b><span>Three.js 和养绿植</span></div>
+            </div>
+          </aside>
+
+          <!-- 右：正文 -->
+          <div class="profile-intro reveal" style="--d:.12s">
+            <p>你好，我是小鸡面 👋</p>
+            <p>
+              一名常驻杭州的创意开发者。白天我给产品写界面、做交互；
+              晚上和周末，我给自己的怪点子做原型——
+              像素游戏、数据可视化、实验字体，什么都想试一试。
+            </p>
+            <p>
+              我不太相信「灵感」，更相信<strong class="hl">把东西做出来</strong>：
+              烂在脑子里的点子等于没有，做出来的烂点子至少好玩。
+              这个网站就是这句话的证据——它没有框架、没有构建工具，
+              是我一个标签一个标签敲出来的。
+            </p>
+            <p>
+              工作之外，我骑车、拍照、画画，以及屡败屡战地学烘焙。
+              如果你也在杭州，或者在做一个有趣的东西，欢迎来找我聊。
+            </p>
+
+            <div class="skill-groups">
+              <div class="skill-group">
+                <span class="skill-group-title">💻 代码</span>
+                <div class="chips">
+                  <span class="chip">HTML / CSS</span>
+                  <span class="chip">JavaScript</span>
+                  <span class="chip">TypeScript</span>
+                  <span class="chip">Vue</span>
+                  <span class="chip">Node.js</span>
+                  <span class="chip">Python</span>
+                </div>
+              </div>
+              <div class="skill-group">
+                <span class="skill-group-title">🎨 设计</span>
+                <div class="chips">
+                  <span class="chip">Figma</span>
+                  <span class="chip">版式设计</span>
+                  <span class="chip">动效设计</span>
+                  <span class="chip">插画（业余）</span>
+                </div>
+              </div>
+              <div class="skill-group">
+                <span class="skill-group-title">🧰 工具</span>
+                <div class="chips">
+                  <span class="chip">Git</span>
+                  <span class="chip">VS Code</span>
+                  <span class="chip">Blender（三脚猫）</span>
+                  <span class="chip">Obsidian</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 时间线 -->
+    <section class="section" style="padding-top: 0;">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2 class="section-title">这些年 <span class="en">TIMELINE</span></h2>
+        </div>
+        <div class="timeline reveal">
+          <div class="tl-item">
+            <div class="tl-year">2016</div>
+            <h3>第一行代码</h3>
+            <p>在同学的旧电脑上用记事本写出了第一个网页：一张黑底绿字的个人主页，从此一发不可收拾。</p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">2019</div>
+            <h3>大学 & 接活</h3>
+            <p>读了个和计算机沾边的专业，开始帮社团和小店主做网站，赚到了第一笔「代码钱」：800 块。</p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">2021</div>
+            <h3>第一份工作</h3>
+            <p>成为一名前端工程师。学会了很多，也掉了很多头发；最大的收获是明白了「能用」和「好用」之间隔着一条银河。</p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">2023</div>
+            <h3>转向创意</h3>
+            <p>开始把更多时间花在设计、动效和独立项目上。做出了猫岛电台视觉、折叠字库，以及一堆没发布但很好玩的原型。</p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">2026</div>
+            <h3>这个网站</h3>
+            <p>决定给自己在网上盖一间小屋。你现在就在里面，欢迎常来。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 联系 -->
+    <section class="contact-cta">
+      <div class="container reveal">
+        <h2 class="cta-title">找到我 <span class="en">CONTACT</span></h2>
+        <p class="cta-sub">邮件是最快的方式，也可以在下面这些地方找到我（回复速度随缘）。</p>
+        <div class="cta-actions">
+          <a class="btn btn-primary btn-lg" href="mailto:hi@yizhou.example">📮 hi@yizhou.example</a>
+        </div>
+        <div class="socials">
+          <a class="social-link" href="https://github.com/yourname" target="_blank" rel="noopener">🐙 GitHub</a>
+          <a class="social-link" href="https://space.bilibili.com/yourid" target="_blank" rel="noopener">📺 B 站</a>
+          <a class="social-link" href="https://xhslink.com/yourid" target="_blank" rel="noopener">📕 小红书</a>
+          <a class="social-link" href="https://weibo.com/yourid" target="_blank" rel="noopener">🌞 微博</a>
+          <a class="social-link" href="blog.html">📰 博客</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <a class="logo" href="index.html">小鸡面<span class="logo-dot">.</span></a>
+        <nav class="footer-nav" aria-label="页脚导航">
+          <a href="index.html">首页</a>
+          <a href="works.html">作品</a>
+          <a href="blog.html">博客</a>
+          <a href="about.html">关于</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span class="js-year">2026</span> 小鸡面 · 保留所有权利</span>
+        <span>本站没有框架、没有构建工具，纯手工打造 ✍️</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

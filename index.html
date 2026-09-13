@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>小鸡面 · 个人网站</title>
+  <meta name="description" content="小鸡面的个人网站：作品、博客与关于我。把奇怪的想法，做成好玩的东西。">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐥</text></svg>">
+  <script>document.documentElement.dataset.theme = localStorage.getItem('theme') || 'light';document.documentElement.classList.add('js');</script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <!-- ===== 顶部导航 ===== -->
+  <header class="site-header">
+    <nav class="nav container" aria-label="主导航">
+      <a class="logo" href="index.html">小鸡面<span class="logo-dot">.</span></a>
+      <button class="nav-toggle" aria-label="打开菜单" aria-expanded="false" aria-controls="nav-menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-menu" id="nav-menu">
+        <a class="nav-link is-active" href="index.html" aria-current="page">首页</a>
+        <a class="nav-link" href="works.html">作品</a>
+        <a class="nav-link" href="blog.html">博客</a>
+        <a class="nav-link" href="about.html">关于</a>
+        <button class="theme-toggle" aria-label="切换深浅色主题">🌙</button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- ===== Hero ===== -->
+    <section class="hero">
+      <div class="hero-blob hero-blob-1"></div>
+      <div class="hero-blob hero-blob-2"></div>
+      <div class="hero-blob hero-blob-3"></div>
+      <div class="hero-deco" aria-hidden="true">🐤</div>
+      <div class="hero-chicken" aria-hidden="true">🐥</div>
+
+      <div class="hero-inner container">
+        <div class="reveal">
+          <span class="hero-eyebrow">🐣 你好，世界</span>
+          <h1 class="hero-name">
+            小鸡面
+            <span class="stroke en">XIAO&nbsp;JI&nbsp;MIAN</span>
+          </h1>
+        </div>
+
+        <div class="hero-stickers reveal" style="--d:.15s">
+          <a class="sticker" href="play.html"><span class="sticker-emoji">🏸</span>约我打球</a>
+          <a class="sticker" href="coffee.html"><span class="sticker-emoji">☕</span>咖啡走起</a>
+          <div class="sticker"><span class="sticker-emoji">🍿</span>有点剧荒</div>
+          <a class="sticker" href="songs.html"><span class="sticker-emoji">🎧</span>神仙歌品</a>
+          <div class="sticker sticker-wide"><span class="sticker-emoji">🏎️</span>卡丁车神</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 跑马灯 ===== -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <div class="marquee-group">
+          <span class="marquee-item"><span class="star">✦</span>约我打球</span>
+          <span class="marquee-item"><span class="star">✦</span>咖啡走起</span>
+          <span class="marquee-item"><span class="star">✦</span>有点剧荒</span>
+          <span class="marquee-item"><span class="star">✦</span>神仙歌品</span>
+          <span class="marquee-item"><span class="star">✦</span>小鸡面的小破站</span>
+          <span class="marquee-item"><span class="star">✦</span>天天开心</span>
+        </div>
+        <div class="marquee-group">
+          <span class="marquee-item"><span class="star">✦</span>约我打球</span>
+          <span class="marquee-item"><span class="star">✦</span>咖啡走起</span>
+          <span class="marquee-item"><span class="star">✦</span>有点剧荒</span>
+          <span class="marquee-item"><span class="star">✦</span>神仙歌品</span>
+          <span class="marquee-item"><span class="star">✦</span>小鸡面的小破站</span>
+          <span class="marquee-item"><span class="star">✦</span>天天开心</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 关于速览 ===== -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2 class="section-title">关于我 <span class="en">ABOUT</span></h2>
+          <a class="section-more" href="about.html">了解更多 →</a>
+        </div>
+        <div class="about-preview">
+          <div class="avatar-card reveal">
+            <div class="avatar-emoji">🐥</div>
+            <div class="avatar-caption">@xiaojimian</div>
+          </div>
+          <div class="reveal" style="--d:.1s">
+            <p>
+              你好呀！我是<strong class="hl">小鸡面</strong> 🐥
+              这里是我的网上小窝——打球、咖啡、追剧、听歌，
+              快乐的事都在这里记录，欢迎常来逛逛！
+            </p>
+            <p>最近的生活日常：</p>
+            <div class="chips">
+              <span class="chip">🏸 打球</span>
+              <span class="chip">☕ 咖啡</span>
+              <span class="chip">🍿 追剧</span>
+              <span class="chip">🎧 听歌</span>
+              <span class="chip">🐥 快乐</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 联系 CTA ===== -->
+    <section class="contact-cta">
+      <div class="container reveal">
+        <h2 class="cta-title">有想法？<br><span class="en">一起搞点事情。</span></h2>
+        <p class="cta-sub">无论是项目合作、约稿，还是单纯想聊天，都欢迎来找我。看到消息我会尽快回复。</p>
+        <div class="cta-actions">
+          <a class="btn btn-primary btn-lg" href="mailto:hi@yizhou.example">📮 发邮件给我</a>
+          <a class="btn btn-lg" href="about.html">联系方式 →</a>
+        </div>
+        <div class="socials">
+          <a class="social-link" href="https://github.com/yourname" target="_blank" rel="noopener">🐙 GitHub</a>
+          <a class="social-link" href="https://space.bilibili.com/yourid" target="_blank" rel="noopener">📺 B 站</a>
+          <a class="social-link" href="https://xhslink.com/yourid" target="_blank" rel="noopener">📕 小红书</a>
+          <a class="social-link" href="https://weibo.com/yourid" target="_blank" rel="noopener">🌞 微博</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== 页脚 ===== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <a class="logo" href="index.html">小鸡面<span class="logo-dot">.</span></a>
+        <nav class="footer-nav" aria-label="页脚导航">
+          <a href="index.html">首页</a>
+          <a href="works.html">作品</a>
+          <a href="blog.html">博客</a>
+          <a href="about.html">关于</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span class="js-year">2026</span> 小鸡面 · 保留所有权利</span>
+        <span>本站没有框架、没有构建工具，<a href="blog/post-handmade-site.html">纯手工打造</a> ✍️</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

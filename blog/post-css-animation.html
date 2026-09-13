@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>从零开始学 CSS 动画：让页面活起来 · 小鸡面的博客</title>
+  <meta name="description" content="transition、transform、keyframes 三件套，让呆板的页面开始呼吸。">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐥</text></svg>">
+  <script>document.documentElement.dataset.theme = localStorage.getItem('theme') || 'light';document.documentElement.classList.add('js');</script>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="site-header">
+    <nav class="nav container" aria-label="主导航">
+      <a class="logo" href="../index.html">小鸡面<span class="logo-dot">.</span></a>
+      <button class="nav-toggle" aria-label="打开菜单" aria-expanded="false" aria-controls="nav-menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-menu" id="nav-menu">
+        <a class="nav-link" href="../index.html">首页</a>
+        <a class="nav-link" href="../works.html">作品</a>
+        <a class="nav-link is-active" href="../blog.html" aria-current="page">博客</a>
+        <a class="nav-link" href="../about.html">关于</a>
+        <button class="theme-toggle" aria-label="切换深浅色主题">🌙</button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <article class="section post-wrap">
+      <a class="back-link" href="../blog.html">← 回到博客列表</a>
+
+      <header class="post-header reveal">
+        <div class="work-meta"><span class="tag">教程</span><span class="tag">CSS</span></div>
+        <h1>从零开始学 CSS 动画：让页面活起来</h1>
+        <div class="post-meta">
+          <time datetime="2026-07-12">2026 年 7 月 12 日</time>
+          <span>·</span>
+          <span>约 8 分钟</span>
+          <span>·</span>
+          <span>字数 1900</span>
+        </div>
+      </header>
+
+      <div class="prose reveal" style="--d:.1s">
+        <p>
+          你有没有过这种体验：一个网站功能都齐了，但就是觉得
+          <em>「哪里怪怪的」</em>——多半是太「死」了。
+          动画就是页面的呼吸，而 CSS 动画是所有方案里性价比最高的那个：
+          不用引库，不用写 JS，几十行声明式代码就够。
+        </p>
+
+        <h2>三件套：transition、transform、keyframes</h2>
+        <p>
+          90% 的 CSS 动效，靠这三个东西组合就能完成。先记住它们各自的分工：
+        </p>
+        <ul>
+          <li><strong>transform</strong>：改样子（位移、旋转、缩放），不引起重排，性能好；</li>
+          <li><strong>transition</strong>：让变化「平滑过渡」而不是瞬间跳变；</li>
+          <li><strong>@keyframes</strong>：定义多段复杂动画，可以循环、可以自动播放。</li>
+        </ul>
+
+        <h2>第一课：会呼吸的按钮</h2>
+        <p>从一个最简单的悬停效果开始。先写一个普通按钮：</p>
+        <pre><code><span class="tok-tag">.btn</span> {
+  <span class="tok-attr">background</span>: <span class="tok-str">#FFD02F</span>;
+  <span class="tok-attr">transition</span>: transform <span class="tok-str">0.2s</span> ease, box-shadow <span class="tok-str">0.2s</span> ease;
+}
+<span class="tok-tag">.btn:hover</span> {
+  <span class="tok-attr">transform</span>: <span class="tok-str">translate(-2px, -2px)</span>;
+  <span class="tok-attr">box-shadow</span>: <span class="tok-str">6px 6px 0 #141414</span>;
+}</code></pre>
+        <p>
+          奥秘在 <code>transition</code> 那一行：它告诉浏览器
+          「transform 和 box-shadow 的变化，请花 0.2 秒慢慢来」。
+          于是悬停时按钮就会「浮」起来，而不是「啪」地跳一下。
+          你现在看到的这个网站的按钮，用的就是这一招。
+        </p>
+
+        <h2>第二课：keyframes，让元素自己动</h2>
+        <p>
+          <code>transition</code> 需要一个触发时机（悬停、聚焦……）。
+          如果想让元素自己动起来，就要用 <code>@keyframes</code>：
+        </p>
+        <pre><code><span class="tok-kw">@keyframes</span> spin {
+  <span class="tok-kw">to</span> { <span class="tok-attr">transform</span>: <span class="tok-str">rotate(360deg)</span>; }
+}
+<span class="tok-tag">.star</span> {
+  <span class="tok-attr">animation</span>: spin <span class="tok-str">26s</span> linear infinite;
+}</code></pre>
+        <p>
+          这段代码的意思是：从当前状态转到 360 度，用 26 秒，
+          匀速（<code>linear</code>），无限循环（<code>infinite</code>）。
+          首页右下角那只慢慢转的小鸡 🐤 就是它。
+        </p>
+
+        <h2>第三课：进场的仪式感</h2>
+        <p>
+          内容滚动到视口时淡入，是提升质感最立竿见影的一招。
+          CSS 负责状态，JS 只负责「告诉 CSS 何时切换状态」：
+        </p>
+        <pre><code><span class="tok-com">/* CSS：初始藏起来，加了类才出现 */</span>
+<span class="tok-tag">.reveal</span> {
+  <span class="tok-attr">opacity</span>: <span class="tok-str">0</span>;
+  <span class="tok-attr">transform</span>: <span class="tok-str">translateY(26px)</span>;
+  <span class="tok-attr">transition</span>: <span class="tok-str">0.7s</span> cubic-bezier(<span class="tok-str">0.2, 0.7, 0.2, 1</span>);
+}
+<span class="tok-tag">.reveal.is-visible</span> {
+  <span class="tok-attr">opacity</span>: <span class="tok-str">1</span>;
+  <span class="tok-attr">transform</span>: <span class="tok-str">none</span>;
+}</code></pre>
+        <pre><code><span class="tok-com">// JS：用 IntersectionObserver 监听元素进入视口</span>
+<span class="tok-kw">const</span> io = <span class="tok-kw">new</span> IntersectionObserver((entries) =&gt; {
+  entries.forEach((e) =&gt; {
+    <span class="tok-kw">if</span> (e.isIntersecting) {
+      e.target.classList.add(<span class="tok-str">'is-visible'</span>);
+      io.unobserve(e.target); <span class="tok-com">// 只播一次</span>
+    }
+  });
+}, { threshold: <span class="tok-str">0.12</span> });
+document.querySelectorAll(<span class="tok-str">'.reveal'</span>).forEach((el) =&gt; io.observe(el));</code></pre>
+
+        <h2>最后一课：体贴一点</h2>
+        <p>
+          有一部分用户（比如前庭功能障碍者）会觉得动画是折磨。
+          尊重系统的「减少动态效果」设置，是一行动画人的基本修养：
+        </p>
+        <pre><code><span class="tok-kw">@media</span> (prefers-reduced-motion: reduce) {
+  <span class="tok-tag">.marquee-track</span> { <span class="tok-attr">animation</span>: <span class="tok-str">none</span>; }
+}</code></pre>
+
+        <h2>课后小练习</h2>
+        <ol>
+          <li>给文章标题加一个悬停时变色的效果（用 <code>transition</code>）；</li>
+          <li>做一个加载中图标，用 <code>@keyframes</code> 让它转起来；</li>
+          <li>把 <code>cubic-bezier</code> 改成 <code>(0.34, 1.56, 0.64, 1)</code>，感受一下「回弹」。</li>
+        </ol>
+        <blockquote>
+          好的动画不是「动得多」，而是「动得刚刚好」——像好的服务员：你需要他时他在，你不需要时他消失。
+        </blockquote>
+      </div>
+
+      <footer class="post-footer">
+        <a href="post-2026-list.html">下一篇：我的 2026 创意清单 →</a>
+        <a href="../blog.html">← 全部文章</a>
+      </footer>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <a class="logo" href="../index.html">小鸡面<span class="logo-dot">.</span></a>
+        <nav class="footer-nav" aria-label="页脚导航">
+          <a href="../index.html">首页</a>
+          <a href="../works.html">作品</a>
+          <a href="../blog.html">博客</a>
+          <a href="../about.html">关于</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span class="js-year">2026</span> 小鸡面 · 保留所有权利</span>
+        <span>本站没有框架、没有构建工具，纯手工打造 ✍️</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

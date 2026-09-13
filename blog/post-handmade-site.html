@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>为什么我用纯手写 HTML 搭建了这个网站 · 小鸡面的博客</title>
+  <meta name="description" content="在框架满天飞的年代，我选择用最原始的方式重建自己的小天地。">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐥</text></svg>">
+  <script>document.documentElement.dataset.theme = localStorage.getItem('theme') || 'light';document.documentElement.classList.add('js');</script>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="site-header">
+    <nav class="nav container" aria-label="主导航">
+      <a class="logo" href="../index.html">小鸡面<span class="logo-dot">.</span></a>
+      <button class="nav-toggle" aria-label="打开菜单" aria-expanded="false" aria-controls="nav-menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-menu" id="nav-menu">
+        <a class="nav-link" href="../index.html">首页</a>
+        <a class="nav-link" href="../works.html">作品</a>
+        <a class="nav-link is-active" href="../blog.html" aria-current="page">博客</a>
+        <a class="nav-link" href="../about.html">关于</a>
+        <button class="theme-toggle" aria-label="切换深浅色主题">🌙</button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <article class="section post-wrap">
+      <a class="back-link" href="../blog.html">← 回到博客列表</a>
+
+      <header class="post-header reveal">
+        <div class="work-meta"><span class="tag">随笔</span><span class="tag">建站</span></div>
+        <h1>为什么我用纯手写 HTML 搭建了这个网站</h1>
+        <div class="post-meta">
+          <time datetime="2026-08-30">2026 年 8 月 30 日</time>
+          <span>·</span>
+          <span>约 6 分钟</span>
+          <span>·</span>
+          <span>字数 1500</span>
+        </div>
+      </header>
+
+      <div class="prose reveal" style="--d:.1s">
+        <p>
+          每次跟朋友说「我这个网站是纯手写的」，对方的第一反应都是：
+          <em>「2026 年了？你为什么不直接用 XX 框架？」</em>
+          这个问题很合理。所以这篇小文就是想认真回答一下它。
+        </p>
+
+        <h2>手写的三个理由</h2>
+
+        <h3>1. 完全可控</h3>
+        <p>
+          网站打开的第一毫秒发生了什么，我全部知道：浏览器拿到 HTML，
+          读一份 CSS，跑几十行 JS，结束。没有水合（hydration），没有依赖树，
+          没有「升级一个包整个站挂掉」的惊吓。我想改一个颜色，
+          打开 CSS 改一行，保存，刷新，完事。
+        </p>
+
+        <h3>2. 没有构建，就没有构建失败</h3>
+        <p>
+          我见过太多项目死于 <code>node_modules</code>：换台电脑，
+          <code>npm install</code> 报错；半年没动，构建工具大版本一更新，
+          配置全要重写。而纯静态文件呢？
+        </p>
+        <blockquote>
+          网站应该像一张纸：拿起来就能读，十年后还能打开。
+        </blockquote>
+        <p>
+          这个网站的所有文件，双击就能在浏览器里打开——连服务器都不需要。
+          只要 HTML 还被这个世界支持（它已经支持了三十多年，并且还会继续），
+          这个网站就还活着。
+        </p>
+
+        <h3>3. 它逼我回到基本功</h3>
+        <p>
+          写框架久了，很容易忘记一些基本问题：一个 <code>&lt;button&gt;</code>
+          的默认行为是什么？焦点应该落在哪里？屏幕阅读器会怎么读这个区域？
+          手写的意思是——这些决定都摆在你面前，躲不掉。
+        </p>
+
+        <h2>整个网站的核心就这几行</h2>
+        <pre><code><span class="tok-com">&lt;!-- 网站的全部骨架，就是这样 --&gt;</span>
+<span class="tok-tag">&lt;html</span> <span class="tok-attr">lang</span>=<span class="tok-str">"zh-CN"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;link</span> <span class="tok-attr">rel</span>=<span class="tok-str">"stylesheet"</span> <span class="tok-attr">href</span>=<span class="tok-str">"css/style.css"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;script</span> <span class="tok-attr">src</span>=<span class="tok-str">"js/main.js"</span><span class="tok-tag">&gt;&lt;/script&gt;</span>
+<span class="tok-tag">&lt;/html&gt;</span></code></pre>
+
+        <h2>代价是什么？</h2>
+        <p>公平起见，也说说坏处：</p>
+        <ul>
+          <li>加新文章要复制一份模板文件，改标题、改正文——没有 Markdown 那么爽；</li>
+          <li>没有标签系统、全文搜索这些「白送」的功能，想要就得自己写；</li>
+          <li>多人协作？不存在的，这是我一个人的小屋。</li>
+        </ul>
+        <p>
+          但对个人网站来说，这些代价几乎可以忽略。更新的频率不高，
+          功能的需求不大，反而是<strong>「永远能打开」</strong>这件事价值最大。
+        </p>
+
+        <h2>所以，什么情况下该用框架？</h2>
+        <p>
+          当你的网站需要「数据」的时候——大量动态内容、用户系统、复杂状态——
+          框架就是正确的工具，这也是我吃饭的家伙。工具没有高低，
+          只有合不合适。
+        </p>
+        <p>
+          而一个个人网站的本质，其实就是几页纸：
+          我是谁，我做过什么，我怎么想。
+          用纸和笔就够了。
+        </p>
+      </div>
+
+      <footer class="post-footer">
+        <a href="post-css-animation.html">下一篇：从零开始学 CSS 动画 →</a>
+        <a href="../blog.html">← 全部文章</a>
+      </footer>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <a class="logo" href="../index.html">小鸡面<span class="logo-dot">.</span></a>
+        <nav class="footer-nav" aria-label="页脚导航">
+          <a href="../index.html">首页</a>
+          <a href="../works.html">作品</a>
+          <a href="../blog.html">博客</a>
+          <a href="../about.html">关于</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span class="js-year">2026</span> 小鸡面 · 保留所有权利</span>
+        <span>本站没有框架、没有构建工具，纯手工打造 ✍️</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

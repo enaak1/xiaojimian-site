@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>博客 · 小鸡面</title>
+  <meta name="description" content="小鸡面的博客：记录学习、思考和一些没用的冷知识。">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐥</text></svg>">
+  <script>document.documentElement.dataset.theme = localStorage.getItem('theme') || 'light';document.documentElement.classList.add('js');</script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="site-header">
+    <nav class="nav container" aria-label="主导航">
+      <a class="logo" href="index.html">小鸡面<span class="logo-dot">.</span></a>
+      <button class="nav-toggle" aria-label="打开菜单" aria-expanded="false" aria-controls="nav-menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-menu" id="nav-menu">
+        <a class="nav-link" href="index.html">首页</a>
+        <a class="nav-link" href="works.html">作品</a>
+        <a class="nav-link is-active" href="blog.html" aria-current="page">博客</a>
+        <a class="nav-link" href="about.html">关于</a>
+        <button class="theme-toggle" aria-label="切换深浅色主题">🌙</button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="page-hero container">
+      <h1 class="page-title reveal">博客 <span class="en">BLOG ✦</span></h1>
+      <p class="page-sub reveal" style="--d:.1s">
+        记录<strong>学习</strong>、<strong>思考</strong>，和一些没什么用但很有趣的冷知识。
+        不定期更新，但每篇都认真写。
+      </p>
+    </section>
+
+    <section class="section" style="padding-top: 0;">
+      <div class="container">
+        <div class="post-list">
+          <a class="post-row reveal" href="blog/post-handmade-site.html">
+            <span class="post-num">01</span>
+            <div class="post-info">
+              <h3>为什么我用纯手写 HTML 搭建了这个网站</h3>
+              <p>在框架满天飞的年代，我选择用最原始的方式重建自己的小天地：没有构建工具，没有依赖，只有几个 HTML 文件和一份 CSS。这是我的理由。</p>
+            </div>
+            <div class="post-side">
+              <time datetime="2026-08-30">2026-08-30</time>
+              <span class="tag">随笔</span>
+            </div>
+            <span class="post-arrow">→</span>
+          </a>
+
+          <a class="post-row reveal" style="--d:.08s" href="blog/post-css-animation.html">
+            <span class="post-num">02</span>
+            <div class="post-info">
+              <h3>从零开始学 CSS 动画：让页面活起来</h3>
+              <p>transition、transform、keyframes 三件套，加上一点点耐心，就能让一个呆板的页面开始呼吸。这篇教程带你从第一个悬停动效写到完整的关键帧动画。</p>
+            </div>
+            <div class="post-side">
+              <time datetime="2026-07-12">2026-07-12</time>
+              <span class="tag">教程</span>
+            </div>
+            <span class="post-arrow">→</span>
+          </a>
+
+          <a class="post-row reveal" style="--d:.16s" href="blog/post-2026-list.html">
+            <span class="post-num">03</span>
+            <div class="post-info">
+              <h3>我的 2026 创意清单</h3>
+              <p>今年想做完的 10 件事：从上线一个像素游戏到学会烤一条像样的面包。做完一件划掉一件，年底来对账。</p>
+            </div>
+            <div class="post-side">
+              <time datetime="2026-05-04">2026-05-04</time>
+              <span class="tag">清单</span>
+            </div>
+            <span class="post-arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-cta">
+      <div class="container reveal">
+        <h2 class="cta-title">不想错过更新？<br><span class="en">常来看看。</span></h2>
+        <p class="cta-sub">这里没有订阅弹窗、没有算法推荐，只有手工更新的文章。</p>
+        <div class="cta-actions">
+          <a class="btn btn-primary btn-lg" href="index.html">← 回首页</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <a class="logo" href="index.html">小鸡面<span class="logo-dot">.</span></a>
+        <nav class="footer-nav" aria-label="页脚导航">
+          <a href="index.html">首页</a>
+          <a href="works.html">作品</a>
+          <a href="blog.html">博客</a>
+          <a href="about.html">关于</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span class="js-year">2026</span> 小鸡面 · 保留所有权利</span>
+        <span>本站没有框架、没有构建工具，纯手工打造 ✍️</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

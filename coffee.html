@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>咖啡走起 · 小鸡面</title>
+  <meta name="description" content="向小鸡面推荐好喝的咖啡店，名称和地址填进来就好。">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐥</text></svg>">
+  <script>document.documentElement.dataset.theme = localStorage.getItem('theme') || 'light';document.documentElement.classList.add('js');</script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="site-header">
+    <nav class="nav container" aria-label="主导航">
+      <a class="logo" href="index.html">小鸡面<span class="logo-dot">.</span></a>
+      <button class="nav-toggle" aria-label="打开菜单" aria-expanded="false" aria-controls="nav-menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-menu" id="nav-menu">
+        <a class="nav-link" href="index.html">首页</a>
+        <a class="nav-link" href="works.html">作品</a>
+        <a class="nav-link" href="blog.html">博客</a>
+        <a class="nav-link" href="about.html">关于</a>
+        <button class="theme-toggle" aria-label="切换深浅色主题">🌙</button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="page-hero container">
+      <h1 class="page-title reveal">咖啡走起 <span class="en">COFFEE ☕</span></h1>
+      <p class="page-sub reveal" style="--d:.1s">
+        知道哪家咖啡店好喝？<strong>把店名和地址填在下面推荐给我</strong>，
+        小鸡面会一家一家去打卡验货，好喝的记在小本本上。
+      </p>
+    </section>
+
+    <section class="section coffee-wrap" style="padding-top: 0;">
+      <div class="container">
+        <form class="bean-form reveal" id="bean-form">
+          <input class="field-input" id="bean-name" type="text" placeholder="咖啡店名称" maxlength="40" required aria-label="咖啡店名称">
+          <input class="field-input" id="bean-addr" type="text" placeholder="地址（比如：某某路 88 号）" maxlength="80" required aria-label="咖啡店地址">
+          <button class="btn btn-primary" type="submit">🎁 推荐给我</button>
+        </form>
+
+        <ul class="bean-list" id="bean-list"></ul>
+        <p class="bean-empty" id="bean-empty">咖啡清单还空着——快来当第一个咖啡星探吧 ☕✨</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <a class="logo" href="index.html">小鸡面<span class="logo-dot">.</span></a>
+        <nav class="footer-nav" aria-label="页脚导航">
+          <a href="index.html">首页</a>
+          <a href="works.html">作品</a>
+          <a href="blog.html">博客</a>
+          <a href="about.html">关于</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span class="js-year">2026</span> 小鸡面 · 保留所有权利</span>
+        <span>推荐清单保存在你自己的浏览器里 🐥</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    'use strict';
+    var KEY = 'xjjm-coffee-list';
+    var form = document.getElementById('bean-form');
+    var nameInput = document.getElementById('bean-name');
+    var addrInput = document.getElementById('bean-addr');
+    var listEl = document.getElementById('bean-list');
+    var emptyEl = document.getElementById('bean-empty');
+
+    function load() {
+      try { return JSON.parse(localStorage.getItem(KEY)) || []; }
+      catch (e) { return []; }
+    }
+    function save(list) {
+      try { localStorage.setItem(KEY, JSON.stringify(list)); } catch (e) { /* 忽略 */ }
+    }
+    function render() {
+      var list = load();
+      listEl.innerHTML = '';
+      emptyEl.hidden = list.length > 0;
+      list.forEach(function (item) {
+        var li = document.createElement('li');
+        li.className = 'bean-item';
+
+        var emoji = document.createElement('span');
+        emoji.className = 'bean-emoji';
+        emoji.textContent = '☕';
+
+        var info = document.createElement('div');
+        info.className = 'bean-info';
+        var name = document.createElement('div');
+        name.className = 'bean-name';
+        name.textContent = item.name;
+        var addr = document.createElement('div');
+        addr.className = 'bean-addr';
+        addr.textContent = '📍 ' + item.addr;
+        info.appendChild(name);
+        info.appendChild(addr);
+
+        var del = document.createElement('button');
+        del.className = 'bean-del';
+        del.type = 'button';
+        del.setAttribute('aria-label', '删除 ' + item.name);
+        del.textContent = '✕';
+        del.addEventListener('click', function () {
+          var rest = load().filter(function (x) { return x.id !== item.id; });
+          save(rest);
+          render();
+        });
+
+        li.appendChild(emoji);
+        li.appendChild(info);
+        li.appendChild(del);
+        listEl.appendChild(li);
+      });
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var list = load();
+      list.unshift({
+        id: String(Date.now()) + Math.random().toString(36).slice(2, 6),
+        name: nameInput.value.trim(),
+        addr: addrInput.value.trim()
+      });
+      save(list);
+      nameInput.value = '';
+      addrInput.value = '';
+      nameInput.focus();
+      render();
+    });
+
+    render();
+  })();
+  </script>
+  <script src="js/main.js"></script>
+</body>
+</html>
