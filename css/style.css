@@ -18,8 +18,6 @@
   --purple: #B28DFF;
   --grid-line: rgba(20, 20, 20, 0.07);
   --dot: #141414;
-  --lyric-ghost: rgba(255, 255, 255, 0.88);   /* 背景幽灵歌词 */
-  --lyric-edge: 0 1px 0 rgba(20, 20, 20, 0.22), 0 0 12px rgba(255, 255, 255, 0.65);
 
   --border: 2px solid var(--ink);
   --shadow: 7px 7px 0 var(--ink);
@@ -38,8 +36,6 @@
   --grid-line: rgba(245, 239, 227, 0.07);
   --dot: #F5EFE3;
   --orange: #FF6B33;
-  --lyric-ghost: rgba(255, 255, 255, 0.3);
-  --lyric-edge: 0 0 14px rgba(255, 255, 255, 0.35);
 }
 
 /* ---------- Reset ---------- */
@@ -368,38 +364,40 @@ a.sticker:focus-visible { outline: 3px dashed #141414; outline-offset: 4px; }
 /* 旋转的装饰星号 */
 .hero-deco {
   position: absolute;
-  font-size: clamp(3rem, 6vw, 5rem);
-  right: 6%;
-  bottom: 8%;
+  font-size: clamp(2.6rem, 5vw, 4.2rem);
+  right: 2.5%;
+  bottom: 3%;
   animation: spin 26s linear infinite;
   z-index: 0;
   opacity: 0.9;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* Hero 背景幽灵歌词（薛之谦） */
-.hero-lyrics {
+/* Hero 背景爱好装饰（漂浮 emoji，悬停放大变亮） */
+.hero-decos {
   position: absolute;
   inset: 0;
   z-index: 2;
   pointer-events: none;
 }
-.hero-lyrics span {
+.hero-decos span {
   position: absolute;
-  color: var(--lyric-ghost);
-  font-weight: 700;
-  white-space: nowrap;
-  pointer-events: auto;
-  cursor: default;
+  line-height: 1;
+  opacity: var(--op, 0.4);
+  filter: saturate(0.85);
   transform: rotate(var(--rot, 0deg));
-  text-shadow: var(--lyric-edge);
-  transition: color 0.25s ease, text-shadow 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease, filter 0.3s ease;
+  animation: deco-float var(--dur, 9s) ease-in-out var(--del, 0s) infinite alternate;
 }
-.hero-lyrics span:hover {
-  color: var(--orange);
-  transform: rotate(var(--rot, 0deg)) scale(1.14);
-  text-shadow: 0 0 18px rgba(255, 255, 255, 0.95), 0 2px 0 rgba(20, 20, 20, 0.2);
+.hero-decos span:hover {
+  transform: rotate(var(--rot, 0deg)) scale(1.35);
+  opacity: 1;
+  filter: saturate(1.15) drop-shadow(0 4px 8px rgba(20, 20, 20, 0.2));
   z-index: 5;
+}
+@keyframes deco-float {
+  from { translate: 0 0; }
+  to { translate: 0 -14px; }
 }
 
 /* Hero 背景中央的大小鸡（CSS 手绘，失落 ↔ 开心两态） */
