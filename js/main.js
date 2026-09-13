@@ -87,6 +87,12 @@
     });
   }
 
+  /* ---------- 标题彩蛋：切走标签页时卖个萌 ---------- */
+  var originalTitle = document.title;
+  document.addEventListener('visibilitychange', function () {
+    document.title = document.hidden ? '🐥 别走嘛……' : originalTitle;
+  });
+
   /* ---------- 页脚年份 ---------- */
   document.querySelectorAll('.js-year').forEach(function (el) {
     el.textContent = String(new Date().getFullYear());

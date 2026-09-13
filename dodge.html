@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>躲避跑圈赛 · 小鸡面</title>
+  <meta name="description" content="开着你的卡丁车躲开香蕉皮，坚持越久越接近车神。">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐥</text></svg>">
+  <script>document.documentElement.dataset.theme = localStorage.getItem('theme') || 'light';document.documentElement.classList.add('js');</script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="site-header">
+    <nav class="nav container" aria-label="主导航">
+      <a class="logo" href="index.html">小鸡面<span class="logo-dot">.</span></a>
+      <button class="nav-toggle" aria-label="打开菜单" aria-expanded="false" aria-controls="nav-menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-menu" id="nav-menu">
+        <a class="nav-link" href="index.html">首页</a>
+        <a class="nav-link" href="works.html">作品</a>
+        <a class="nav-link" href="blog.html">博客</a>
+        <a class="nav-link" href="about.html">关于</a>
+        <button class="theme-toggle" aria-label="切换深浅色主题">🌙</button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="page-hero container">
+      <h1 class="page-title reveal">躲避跑圈赛 <span class="en">DODGE ✦</span></h1>
+      <p class="page-sub reveal" style="--d:.1s">
+        开着你的卡丁车<strong>左右移动躲开香蕉皮</strong>，坚持越久、躲得越多越强。
+        键盘 ←→ / A D，手机按住左右半边屏幕。
+      </p>
+    </section>
+
+    <section class="section" style="padding-top: 0;">
+      <div class="container dodge-wrap">
+        <div class="dodge-track reveal" id="dodge-track">
+          <div class="dodge-player" id="dodge-player">🏎️</div>
+          <div class="dodge-overlay" id="dodge-overlay">
+            <div>
+              <div class="race-msg" id="dodge-msg">点击赛道发车！</div>
+              <p class="race-hint" style="margin-top: .6rem;">← → 或 A D 移动，手机按住左右半边</p>
+            </div>
+          </div>
+        </div>
+        <div class="dodge-hud">
+          <span class="stat-pill">⏱ 存活 <b id="hud-time">0.0</b> s</span>
+          <span class="stat-pill">🍌 躲开 <b id="hud-dodged">0</b> 个</span>
+          <span class="stat-pill">🏆 最佳 <b id="hud-best">--</b></span>
+          <span class="stat-pill">📜 最近 <b id="hud-recent">--</b></span>
+        </div>
+        <p class="reveal" style="--d:.1s; text-align:center; margin-top: 2rem;">
+          <a class="back-link" href="kart-game.html">← 换个玩法：起步反应赛</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <a class="logo" href="index.html">小鸡面<span class="logo-dot">.</span></a>
+        <nav class="footer-nav" aria-label="页脚导航">
+          <a href="index.html">首页</a>
+          <a href="works.html">作品</a>
+          <a href="blog.html">博客</a>
+          <a href="about.html">关于</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span class="js-year">2026</span> 小鸡面 · 保留所有权利</span>
+        <span>没有一只香蕉皮在游戏中真正受伤 🍌</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    'use strict';
+    var track = document.getElementById('dodge-track');
+    var playerEl = document.getElementById('dodge-player');
+    var overlay = document.getElementById('dodge-overlay');
+    var msgEl = document.getElementById('dodge-msg');
+    var timeEl = document.getElementById('hud-time');
+    var dodgedEl = document.getElementById('hud-dodged');
+    var bestEl = document.getElementById('hud-best');
+    var recentEl = document.getElementById('hud-recent');
+    var HAZARDS = ['🍌', '🥤', '🧱', '🛞'];
+    var SPEED = 330;          // 玩家横向速度 px/s
+    var BASE_FALL = 170;      // 初始下落速度 px/s
+    var ACCEL = 9;            // 每秒增加的下落速度
+    var SPAWN_START = 900;    // 初始生成间隔 ms
+
+    var state = 'idle';       // idle | running | over
+    var playerX = 0, lastTs = 0, elapsed = 0, dodged = 0, fallSpeed = BASE_FALL, spawnTimer = 0;
+    var hazards = [];
+    var keys = { left: false, right: false };
+    var rafId = 0;
+
+    function store(key, val) { try { localStorage.setItem(key, val); } catch (e) {} }
+    function load(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
+
+    function refreshStats() {
+      bestEl.textContent = load('xjjm-dodge-best') ? load('xjjm-dodge-best') + ' 个' : '--';
+      var h;
+      try { h = JSON.parse(load('xjjm-dodge-history') || '[]'); } catch (e) { h = []; }
+      recentEl.textContent = h.length ? h.join(' / ') + ' 个' : '--';
+    }
+
+    function grade(n) {
+      if (n >= 40) return '车神认证的走位！！小鸡面起立鼓掌 🐥';
+      if (n >= 25) return '身法飘逸，弯道收割机实至名归 🌀';
+      if (n >= 15) return '不错不错，香蕉皮开始怕你了';
+      if (n >= 8) return '及格了，但车神在终点打了个哈欠';
+      return '被一根香蕉皮打败了……再来，挽回尊严！';
+    }
+
+    function setPlayerX(x) {
+      playerX = Math.max(26, Math.min(track.clientWidth - 26, x));
+      playerEl.style.left = playerX + 'px';
+    }
+
+    function spawn() {
+      var el = document.createElement('div');
+      el.className = 'hazard';
+      el.textContent = HAZARDS[Math.floor(Math.random() * HAZARDS.length)];
+      var x = 40 + Math.random() * (track.clientWidth - 80);
+      el.style.left = x + 'px';
+      track.appendChild(el);
+      hazards.push({ el: el, x: x, y: -48 });
+    }
+
+    function clearHazards() {
+      hazards.forEach(function (h) { h.el.remove(); });
+      hazards = [];
+    }
+
+    function start() {
+      clearHazards();
+      state = 'running';
+      elapsed = 0; dodged = 0; fallSpeed = BASE_FALL; spawnTimer = 400;
+      overlay.style.display = 'none';
+      playerEl.textContent = '🏎️';
+      setPlayerX(track.clientWidth / 2);
+      lastTs = performance.now();
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(loop);
+    }
+
+    function gameOver() {
+      state = 'over';
+      playerEl.textContent = '💥';
+      var best = parseInt(load('xjjm-dodge-best') || '0', 10);
+      var record = dodged > best;
+      if (record) store('xjjm-dodge-best', String(dodged));
+      var h;
+      try { h = JSON.parse(load('xjjm-dodge-history') || '[]'); } catch (e) { h = []; }
+      h.unshift(dodged);
+      h = h.slice(0, 5);
+      store('xjjm-dodge-history', JSON.stringify(h));
+      refreshStats();
+      msgEl.innerHTML = '💥 撞了！躲开 <b>' + dodged + '</b> 个，坚持 <b>' + elapsed.toFixed(1) +
+        '</b> 秒<br>' + grade(dodged) + (record ? '<br>🏅 新纪录！' : '') +
+        '<br><br>点击赛道再来一次';
+      overlay.style.display = '';
+    }
+
+    function loop(ts) {
+      if (state !== 'running') return;
+      var dt = Math.min((ts - lastTs) / 1000, 0.05);
+      lastTs = ts;
+      elapsed += dt;
+
+      fallSpeed = BASE_FALL + elapsed * ACCEL;
+      var dir = (keys.right ? 1 : 0) - (keys.left ? 1 : 0);
+      setPlayerX(playerX + dir * SPEED * dt);
+
+      spawnTimer -= dt * 1000;
+      if (spawnTimer <= 0) {
+        spawn();
+        spawnTimer = Math.max(340, SPAWN_START - elapsed * 14) * (0.7 + Math.random() * 0.6);
+      }
+
+      var py = track.clientHeight - 46;
+      for (var i = hazards.length - 1; i >= 0; i--) {
+        var h = hazards[i];
+        h.y += fallSpeed * dt;
+        h.el.style.top = h.y + 'px';
+        if (h.y > track.clientHeight + 40) {
+          h.el.remove();
+          hazards.splice(i, 1);
+          dodged++;
+          dodgedEl.textContent = dodged;
+          continue;
+        }
+        if (Math.abs(h.x - playerX) < 30 && Math.abs(h.y - py) < 34) { gameOver(); return; }
+      }
+      timeEl.textContent = elapsed.toFixed(1);
+      rafId = requestAnimationFrame(loop);
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.repeat) return;
+      if (e.code === 'ArrowLeft' || e.code === 'KeyA') keys.left = true;
+      if (e.code === 'ArrowRight' || e.code === 'KeyD') keys.right = true;
+      if (e.code === 'Space' && state !== 'running') {
+        e.preventDefault();
+        start();
+      }
+    });
+    document.addEventListener('keyup', function (e) {
+      if (e.code === 'ArrowLeft' || e.code === 'KeyA') keys.left = false;
+      if (e.code === 'ArrowRight' || e.code === 'KeyD') keys.right = false;
+    });
+    track.addEventListener('pointerdown', function (e) {
+      if (state !== 'running') { start(); return; }
+      var rect = track.getBoundingClientRect();
+      if (e.clientX - rect.left < rect.width / 2) keys.left = true; else keys.right = true;
+    });
+    function releaseKeys() { keys.left = false; keys.right = false; }
+    track.addEventListener('pointerup', releaseKeys);
+    track.addEventListener('pointercancel', releaseKeys);
+    track.addEventListener('pointerleave', releaseKeys);
+
+    setPlayerX(track.clientWidth / 2);
+    refreshStats();
+  })();
+  </script>
+  <script src="js/main.js"></script>
+</body>
+</html>

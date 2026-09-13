@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>每日小鸡签 · 小鸡面</title>
+  <meta name="description" content="一天一签，宜忌俱全。小鸡面亲批，同一支签陪伴所有人一整天。">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐥</text></svg>">
+  <script>document.documentElement.dataset.theme = localStorage.getItem('theme') || 'light';document.documentElement.classList.add('js');</script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="site-header">
+    <nav class="nav container" aria-label="主导航">
+      <a class="logo" href="index.html">小鸡面<span class="logo-dot">.</span></a>
+      <button class="nav-toggle" aria-label="打开菜单" aria-expanded="false" aria-controls="nav-menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-menu" id="nav-menu">
+        <a class="nav-link" href="index.html">首页</a>
+        <a class="nav-link" href="works.html">作品</a>
+        <a class="nav-link" href="blog.html">博客</a>
+        <a class="nav-link" href="about.html">关于</a>
+        <button class="theme-toggle" aria-label="切换深浅色主题">🌙</button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="page-hero container">
+      <h1 class="page-title reveal">每日小鸡签 <span class="en">FORTUNE ✦</span></h1>
+      <p class="page-sub reveal" style="--d:.1s">
+        一天一签，宜忌俱全。<strong>小鸡面亲批</strong>，同一支签陪伴所有人一整天——
+        换个日子来，就是新的一支。
+      </p>
+    </section>
+
+    <section class="section" style="padding-top: 0;">
+      <div class="container fortune-wrap">
+        <div class="fortune-card reveal">
+          <span class="fortune-level" id="f-level">上上签</span>
+          <div class="fortune-no" id="f-no">第 1 号签 · 全年第 1 天</div>
+          <div class="fortune-yiji">
+            <div class="fortune-row"><span class="k">宜</span><span id="f-yi">--</span></div>
+            <div class="fortune-row"><span class="k">忌</span><span id="f-ji">--</span></div>
+          </div>
+          <p class="fortune-note" id="f-note">--</p>
+          <div class="fortune-actions">
+            <button class="btn btn-primary" id="f-reroll" type="button">🔄 偷看另一支</button>
+            <p class="fortune-tip">提醒：偷看的签不灵哦（灵不灵反正也不收费）。</p>
+          </div>
+        </div>
+        <p class="reveal" style="--d:.1s; text-align:center; margin-top: 2rem;">
+          <a class="back-link" href="index.html">← 回首页</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <a class="logo" href="index.html">小鸡面<span class="logo-dot">.</span></a>
+        <nav class="footer-nav" aria-label="页脚导航">
+          <a href="index.html">首页</a>
+          <a href="works.html">作品</a>
+          <a href="blog.html">博客</a>
+          <a href="about.html">关于</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span class="js-year">2026</span> 小鸡面 · 保留所有权利</span>
+        <span>签文仅供娱乐，认真你就输了 🐥</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    'use strict';
+    var POOL = [
+      { l: '上上签', yi: '出门晒太阳', ji: '假装努力', note: '阳光免费的，努力装不出来。小鸡面看了都想跟你一起躺。' },
+      { l: '上上签', yi: '约朋友打球', ji: '抢跑', note: '红灯还没灭呢。今天的手速留给正经发车。' },
+      { l: '上签',   yi: '来杯冰美式', ji: '熬夜', note: '小鸡面靠咖啡续命，靠睡眠保命，你至少选一样。' },
+      { l: '中签',   yi: '整理房间', ji: '网购剁手', note: '再买下去，快递箱会比车神的奖杯还多。' },
+      { l: '上上签', yi: '开一把卡丁车', ji: '贴墙过弯', note: '撞墙艺术家已退役，请勿返聘。' },
+      { l: '上签',   yi: '听完整张专辑', ji: '单曲循环到腻', note: '神仙歌品第 553 首等你贡献，快去听点新的。' },
+      { l: '中签',   yi: '早睡十分钟', ji: '睡前刷手机', note: '屏幕蓝光不是月光，睡不着别怪鸡。' },
+      { l: '上上签', yi: '写点东西', ji: '纠结完美', note: '发出来的烂点子，胜过藏起来的好点子。' },
+      { l: '吉',     yi: '大口喝水', ji: '久坐不动', note: '起来学小鸡面扭一扭，转角遇到腰。' },
+      { l: '上签',   yi: '承认错误', ji: '嘴硬', note: '认错的小鸡，毛都顺得特别快。' },
+      { l: '上上签', yi: '尝试新餐馆', ji: '老点同一道菜', note: '味蕾也需要一点新鲜感，咖啡走起顺路带上它。' },
+      { l: '吉',     yi: '给朋友发消息', ji: '已读不回', note: '友情和绿植一样，不浇水是会枯的。' },
+      { l: '中签',   yi: '制定小计划', ji: '立大 flag', note: 'flag 立得太高，小鸡面蹦起来也够不着。' },
+      { l: '上签',   yi: '散个长步', ji: '边走边看手机', note: '路上真的有好看的小鸡——比如抬头看到这行字的你。' },
+      { l: '吉',     yi: '学一个新技能', ji: '三分钟热度', note: '点燃热情容易，保温很难，今天多保温一分钟。' },
+      { l: '上上签', yi: '夸夸自己', ji: '自我贬低', note: '你今天也很棒，这是车神认证过的，不接受反驳。' },
+      { l: '中签',   yi: '收拾桌面', ji: '找借口', note: '桌面乱的人不一定乱，但找东西一定慢。' },
+      { l: '上签',   yi: '看一集好剧', ji: '熬夜连播', note: '剧荒请移步「有点剧荒」，别硬扛。' },
+      { l: '吉',     yi: '微笑', ji: '摆臭脸', note: '笑一笑，小鸡面给你跳个舞（脑补即可）。' },
+      { l: '上上签', yi: '好好吃饭', ji: '糊弄一口', note: '胃是自己的，别拿它跑卡丁车。' }
+    ];
+
+    function todayKey() {
+      var d = new Date();
+      return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+    }
+    function dayOfYear(d) {
+      var start = new Date(d.getFullYear(), 0, 0);
+      return Math.floor((d - start) / 86400000);
+    }
+    function render(fortune, no, total) {
+      document.getElementById('f-level').textContent = fortune.l;
+      document.getElementById('f-no').textContent = '第 ' + no + ' 号签 · 全年第 ' + dayOfYear(new Date()) + ' 天';
+      document.getElementById('f-yi').textContent = fortune.yi;
+      document.getElementById('f-ji').textContent = fortune.ji;
+      document.getElementById('f-note').textContent = fortune.note;
+      document.getElementById('f-no').dataset.total = total;
+    }
+    function hash(str) {
+      var h = 0;
+      for (var i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0;
+      return h;
+    }
+
+    // 当天的固定签：日期字符串哈希 → 同一天所有人同一支
+    var key = todayKey();
+    var idx = hash(key) % POOL.length;
+    render(POOL[idx], idx + 1, POOL.length);
+
+    // 偷看模式：随机换一支（不固定）
+    document.getElementById('f-reroll').addEventListener('click', function () {
+      var next = Math.floor(Math.random() * POOL.length);
+      if (next === idx) next = (next + 1) % POOL.length;
+      render(POOL[next], next + 1, POOL.length);
+      idx = next;
+    });
+  })();
+  </script>
+  <script src="js/main.js"></script>
+</body>
+</html>
