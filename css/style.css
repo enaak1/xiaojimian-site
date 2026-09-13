@@ -18,6 +18,8 @@
   --purple: #B28DFF;
   --grid-line: rgba(20, 20, 20, 0.07);
   --dot: #141414;
+  --lyric-ghost: rgba(255, 255, 255, 0.88);   /* 背景幽灵歌词 */
+  --lyric-edge: 0 1px 0 rgba(20, 20, 20, 0.22), 0 0 12px rgba(255, 255, 255, 0.65);
 
   --border: 2px solid var(--ink);
   --shadow: 7px 7px 0 var(--ink);
@@ -36,6 +38,8 @@
   --grid-line: rgba(245, 239, 227, 0.07);
   --dot: #F5EFE3;
   --orange: #FF6B33;
+  --lyric-ghost: rgba(255, 255, 255, 0.3);
+  --lyric-edge: 0 0 14px rgba(255, 255, 255, 0.35);
 }
 
 /* ---------- Reset ---------- */
@@ -373,6 +377,31 @@ a.sticker:focus-visible { outline: 3px dashed #141414; outline-offset: 4px; }
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
+/* Hero 背景幽灵歌词（薛之谦） */
+.hero-lyrics {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+.hero-lyrics span {
+  position: absolute;
+  color: var(--lyric-ghost);
+  font-weight: 700;
+  white-space: nowrap;
+  pointer-events: auto;
+  cursor: default;
+  transform: rotate(var(--rot, 0deg));
+  text-shadow: var(--lyric-edge);
+  transition: color 0.25s ease, text-shadow 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.hero-lyrics span:hover {
+  color: var(--orange);
+  transform: rotate(var(--rot, 0deg)) scale(1.14);
+  text-shadow: 0 0 18px rgba(255, 255, 255, 0.95), 0 2px 0 rgba(20, 20, 20, 0.2);
+  z-index: 5;
+}
+
 /* Hero 背景中央的大小鸡 */
 .hero-chicken {
   position: absolute;
@@ -402,14 +431,21 @@ a.sticker:focus-visible { outline: 3px dashed #141414; outline-offset: 4px; }
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee 24s linear infinite;
+  animation: marquee 55s linear infinite;
 }
 .marquee-group { display: flex; align-items: center; white-space: nowrap; }
 .marquee-item {
   font-family: var(--font-display);
-  font-size: 1.25rem;
-  letter-spacing: 0.06em;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
   padding-inline: 1.4rem;
+}
+.marquee-item em {
+  font-style: normal;
+  opacity: 0.62;
+  font-size: 0.8em;
+  margin-left: 0.45em;
+  letter-spacing: 0.02em;
 }
 .marquee-item .star { color: var(--orange); margin-right: 1.4rem; }
 [data-theme='dark'] .marquee-item .star { color: var(--yellow); }

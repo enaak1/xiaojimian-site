@@ -37,6 +37,7 @@
       <div class="hero-blob hero-blob-3"></div>
       <div class="hero-deco" aria-hidden="true">🐤</div>
       <div class="hero-chicken" aria-hidden="true">🐥</div>
+      <div class="hero-lyrics" id="hero-lyrics" aria-hidden="true"></div>
 
       <div class="hero-inner container">
         <div class="reveal">
@@ -60,23 +61,9 @@
 
     <!-- ===== 跑马灯 ===== -->
     <div class="marquee" aria-hidden="true">
-      <div class="marquee-track">
-        <div class="marquee-group">
-          <span class="marquee-item"><span class="star">✦</span>约我打球</span>
-          <span class="marquee-item"><span class="star">✦</span>咖啡走起</span>
-          <span class="marquee-item"><span class="star">✦</span>有点剧荒</span>
-          <span class="marquee-item"><span class="star">✦</span>神仙歌品</span>
-          <span class="marquee-item"><span class="star">✦</span>小鸡面的小破站</span>
-          <span class="marquee-item"><span class="star">✦</span>天天开心</span>
-        </div>
-        <div class="marquee-group">
-          <span class="marquee-item"><span class="star">✦</span>约我打球</span>
-          <span class="marquee-item"><span class="star">✦</span>咖啡走起</span>
-          <span class="marquee-item"><span class="star">✦</span>有点剧荒</span>
-          <span class="marquee-item"><span class="star">✦</span>神仙歌品</span>
-          <span class="marquee-item"><span class="star">✦</span>小鸡面的小破站</span>
-          <span class="marquee-item"><span class="star">✦</span>天天开心</span>
-        </div>
+      <div class="marquee-track" id="marquee-track">
+        <div class="marquee-group"></div>
+        <div class="marquee-group"></div>
       </div>
     </div>
 
@@ -149,6 +136,95 @@
     </div>
   </footer>
 
+  <script>
+  /* 首页薛之谦歌词：跑马灯全量轮播 + 背景幽灵歌词（短句、随机位置角度大小、悬停高亮） */
+  (function () {
+    'use strict';
+    var SONGS = [
+      ['有一天晚上 梦一场 你白发苍苍 说带我流浪 我还是没犹豫 就随你去天堂 不管能怎样 我能陪你到天亮', '你还要我怎样'],
+      ['我陪你走过的路你不能忘 因为那是我 最快乐的时光', '你还要我怎样'],
+      ['我后来都会选择绕过那条街 又多希望在另一条街能遇见', '你还要我怎样'],
+      ['不爱你的人 说什么都没用', '其实'],
+      ['用力爱过的人不该计较', '刚刚好'],
+      ['你是我今生未完成的歌，唱不到结局却又难以割舍', '未完成的歌'],
+      ['我想摸你的头发 只是简单的试探啊 我想给你个拥抱 像以前一样可以吗', '绅士'],
+      ['故事已说完，懒得圆满', '一半'],
+      ['我宁愿 留在你方圆几里 我的心 要不回就送你 因为我爱你 和你没关系', '方圆几里'],
+      ['难过若写不完，用情歌刁难', '一半'],
+      ['该配合你演出的我演视而不见 在逼一个最爱你的人即兴表演', '演员'],
+      ['我毁了艘小船，逼我们隔着岸', '一半'],
+      ['我不要你怎样 没怎样 我陪你走的路你不能忘 因为那是我 最快乐的时光', '你还要我怎样'],
+      ['其实说分不开的也不见得，其实感情最怕的就是拖着', '演员'],
+      ['你听不到我的声音 怕脱口而出是你姓名', '我好像在哪见过你'],
+      ['我多高尚，向自尊开了枪', '高尚'],
+      ['我怕太负责任的人 因为他随时会牺牲', '方圆几里'],
+      ['你可以为我们的散不用承担 是我投入到一半感到不安 好过未来一点一点纠缠', '一半'],
+      ['你听不到我的声音 怕脱口而出是你姓名 像确定我要遇见你 就像曾经交换过眼睛', '我好像在哪见过你'],
+      ['没能力遮挡 你去的方向 至少分开的时候 我落落大方', '你还要我怎样'],
+      ['我听见了你的声音 也藏着颗不敢见的心', '我好像在哪见过你'],
+      ['故事要美必须藏着真话', '刚刚好'],
+      ['我并不在乎自己究竟多伤痕累累，可我在乎今后你让谁陪', '认真的雪'],
+      ['爱不爱都可以 我怎样都依你', '方圆几里'],
+      ['这世界太嘈杂 周边都是假话 你能不能再找个理由 等我回家', '等我回家'],
+      ['明知这是一场意外，你要不要来', '意外'],
+      ['我陪你走过的路你不能忘', '你还要我怎样'],
+      ['隔墙有只耳朵嘲笑你多难过 你越反驳越像示弱', '一半'],
+      ['如果风景早已都不存在，我想我谁都不爱', '意外']
+    ];
+
+    function shuffle(arr) {
+      var a = arr.slice();
+      for (var i = a.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = a[i]; a[i] = a[j]; a[j] = t;
+      }
+      return a;
+    }
+
+    /* ---- 跑马灯：全量歌词，两组相同内容无缝循环 ---- */
+    var groups = document.querySelectorAll('#marquee-track .marquee-group');
+    groups.forEach(function (group) {
+      SONGS.forEach(function (s) {
+        var item = document.createElement('span');
+        item.className = 'marquee-item';
+        item.innerHTML = '<span class="star">♫</span>';
+        var q = document.createElement('span');
+        q.textContent = '「' + s[0] + '」';
+        var em = document.createElement('em');
+        em.textContent = '《' + s[1] + '》';
+        item.appendChild(q);
+        item.appendChild(em);
+        group.appendChild(item);
+      });
+    });
+
+    /* ---- 背景幽灵歌词：短句 + 30 个安全锚点随机取样 ---- */
+    var ANCHORS = [
+      [5, 9], [15, 11], [26, 7], [37, 12], [48, 8], [59, 6], [70, 11], [81, 7], [88, 10], [40, 6],
+      [2, 30], [2, 58], [95, 32], [95, 60],
+      [8, 86], [19, 90], [31, 86], [44, 90], [57, 86], [70, 90], [82, 86], [91, 89],
+      [12, 20], [30, 18], [62, 20], [80, 18],
+      [3, 72], [95, 74], [45, 4], [60, 4]
+    ];
+    var box = document.getElementById('hero-lyrics');
+    if (!box) return;
+    var bgSongs = shuffle(SONGS.filter(function (s) { return s[0].length <= 22; }));
+    var spots = shuffle(ANCHORS);
+    var count = Math.min(bgSongs.length, spots.length);
+    for (var i = 0; i < count; i++) {
+      var t = bgSongs[i], a = spots[i];
+      var span = document.createElement('span');
+      span.textContent = '「' + t[0] + '」';
+      span.title = '♪ 薛之谦《' + t[1] + '》';
+      span.style.left = (a[0] + (Math.random() * 3 - 1.5)) + '%';
+      span.style.top = (a[1] + (Math.random() * 3 - 1.5)) + '%';
+      var size = Math.max(1.0, 1.9 - t[0].length * 0.032) + Math.random() * 0.3;
+      span.style.fontSize = size.toFixed(2) + 'rem';
+      span.style.setProperty('--rot', Math.floor(Math.random() * 70 - 35) + 'deg');
+      box.appendChild(span);
+    }
+  })();
+  </script>
   <script src="js/main.js"></script>
 </body>
 </html>
