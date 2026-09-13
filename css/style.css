@@ -358,7 +358,6 @@ ul, ol { list-style-position: inside; }
 .sticker:nth-child(5) { background: var(--orange); transform: rotate(2.5deg); }
 .sticker:nth-child(6) { background: var(--purple); transform: rotate(-2.5deg); }
 .sticker:hover { transform: rotate(0deg) scale(1.04); }
-.sticker-wide { grid-column: 1 / -1; }
 a.sticker { color: #141414; }
 a.sticker:focus-visible { outline: 3px dashed #141414; outline-offset: 4px; }
 
