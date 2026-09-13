@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>挑战车神 · 小鸡面</title>
+  <meta name="description" content="五盏红灯全灭的瞬间按下空格，测测你的起步反应，挑战车神纪录。">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐥</text></svg>">
+  <script>document.documentElement.dataset.theme = localStorage.getItem('theme') || 'light';document.documentElement.classList.add('js');</script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="site-header">
+    <nav class="nav container" aria-label="主导航">
+      <a class="logo" href="index.html">小鸡面<span class="logo-dot">.</span></a>
+      <button class="nav-toggle" aria-label="打开菜单" aria-expanded="false" aria-controls="nav-menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-menu" id="nav-menu">
+        <a class="nav-link" href="index.html">首页</a>
+        <a class="nav-link" href="works.html">作品</a>
+        <a class="nav-link" href="blog.html">博客</a>
+        <a class="nav-link" href="about.html">关于</a>
+        <button class="theme-toggle" aria-label="切换深浅色主题">🌙</button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="page-hero container">
+      <h1 class="page-title reveal">挑战车神 <span class="en">RACE ✦</span></h1>
+      <p class="page-sub reveal" style="--d:.1s">
+        五盏红灯<strong>全灭变绿的瞬间</strong>按空格（或点击赛道），看看你的起步反应——
+        目标是击败车神的 <strong>166ms</strong>。
+      </p>
+    </section>
+
+    <section class="section" style="padding-top: 0;">
+      <div class="container" style="max-width: 860px;">
+        <div class="race-stage reveal" id="race-stage">
+          <div class="start-lights" aria-hidden="true">
+            <div class="lamp"></div><div class="lamp"></div><div class="lamp"></div><div class="lamp"></div><div class="lamp"></div>
+          </div>
+          <div class="race-msg" id="race-msg">点击这里 或 按下空格，发车！</div>
+          <div class="reaction-ms" id="reaction-ms" hidden>0<small> ms</small></div>
+          <div class="race-stats" id="race-stats">
+            <span class="stat-pill">🏎️ 车神纪录 166 ms</span>
+            <span class="stat-pill" id="stat-best">⭐ 你的最佳 --</span>
+            <span class="stat-pill" id="stat-recent">📜 最近 --</span>
+          </div>
+          <p class="race-hint">红灯亮完之前按键 = 抢跑犯规。成绩只存在你自己的浏览器里，不会上传。</p>
+        </div>
+
+        <p class="reveal" style="--d:.1s; text-align:center; margin-top: 2rem;">
+          <a class="back-link" href="kart.html">← 回到车神驾照</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <a class="logo" href="index.html">小鸡面<span class="logo-dot">.</span></a>
+        <nav class="footer-nav" aria-label="页脚导航">
+          <a href="index.html">首页</a>
+          <a href="works.html">作品</a>
+          <a href="blog.html">博客</a>
+          <a href="about.html">关于</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span class="js-year">2026</span> 小鸡面 · 保留所有权利</span>
+        <span>输给车神不丢人，车神也是练了整整一个下午的 🐥</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    'use strict';
+    var GOD_TIME = 166;
+    var stage = document.getElementById('race-stage');
+    var msgEl = document.getElementById('race-msg');
+    var msEl = document.getElementById('reaction-ms');
+    var bestEl = document.getElementById('stat-best');
+    var recentEl = document.getElementById('stat-recent');
+    var lamps = Array.prototype.slice.call(document.querySelectorAll('.lamp'));
+    var state = 'idle';
+    var t0 = 0;
+    var timers = [];
+
+    function store(key, val) {
+      try { localStorage.setItem(key, val); } catch (e) { /* 忽略 */ }
+    }
+    function load(key) {
+      try { return localStorage.getItem(key); } catch (e) { return null; }
+    }
+    function clearTimers() {
+      timers.forEach(clearTimeout);
+      timers = [];
+    }
+    function resetLamps() {
+      lamps.forEach(function (l) { l.classList.remove('on', 'go'); });
+    }
+    function setMsg(text) { msgEl.textContent = text; }
+    function refreshStats() {
+      var best = load('xjjm-kart-best');
+      bestEl.textContent = '⭐ 你的最佳 ' + (best ? best + ' ms' : '--');
+      var history;
+      try { history = JSON.parse(load('xjjm-kart-history') || '[]'); } catch (e) { history = []; }
+      recentEl.textContent = '📜 最近 ' + (history.length ? history.join(' / ') + ' ms' : '--');
+    }
+
+    function grade(ms) {
+      if (ms < GOD_TIME) return '超过车神纪录？！好吧，算你运气好——再来一次证明实力 🐥';
+      if (ms < 220) return '专业车手水准，离车神只差一个弯道 🏆';
+      if (ms < 280) return '不错的起步，不过小鸡面已经吃完一碗面了 🍜';
+      if (ms < 380) return '有点慢哦，小鸡面已经绕场一圈了';
+      return '你是在等外卖吗？小鸡面已经到达终点 🐥';
+    }
+
+    function startRace() {
+      clearTimers();
+      resetLamps();
+      msEl.hidden = true;
+      state = 'arming';
+      setMsg('盯紧了——全灭变绿的瞬间出手……');
+      var delay = 300;
+      lamps.forEach(function (lamp) {
+        delay += 300 + Math.random() * 280;
+        timers.push(setTimeout(function () { lamp.classList.add('on'); }, delay));
+      });
+      timers.push(setTimeout(function () {
+        lamps.forEach(function (l) { l.classList.remove('on'); l.classList.add('go'); });
+        t0 = performance.now();
+        state = 'go';
+        setMsg('就是现在！！');
+      }, delay + 500 + Math.random() * 1700));
+    }
+
+    function foul() {
+      clearTimers();
+      resetLamps();
+      state = 'idle';
+      setMsg('抢跑犯规！红灯还没灭呢——小鸡面已经到终点了 🐥。准备好了再发车。');
+    }
+
+    function finish(ms) {
+      state = 'result';
+      msEl.hidden = false;
+      msEl.innerHTML = ms + '<small> ms</small>';
+      setMsg(grade(ms));
+      var best = parseInt(load('xjjm-kart-best') || '99999', 10);
+      if (ms < best) {
+        store('xjjm-kart-best', String(ms));
+        if (best !== 99999) setMsg('🏅 新的个人纪录！' + grade(ms));
+      }
+      var history;
+      try { history = JSON.parse(load('xjjm-kart-history') || '[]'); } catch (e) { history = []; }
+      history.unshift(ms);
+      history = history.slice(0, 5);
+      store('xjjm-kart-history', JSON.stringify(history));
+      refreshStats();
+    }
+
+    function hit() {
+      if (state === 'idle' || state === 'result') startRace();
+      else if (state === 'arming') foul();
+      else if (state === 'go') finish(Math.round(performance.now() - t0));
+    }
+
+    stage.addEventListener('click', hit);
+    document.addEventListener('keydown', function (e) {
+      if (e.code === 'Space' && !e.repeat) {
+        e.preventDefault();
+        hit();
+      }
+    });
+    refreshStats();
+  })();
+  </script>
+  <script src="js/main.js"></script>
+</body>
+</html>

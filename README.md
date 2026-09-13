@@ -11,6 +11,9 @@ myweb/
 ├── play.html         「约我打球」落地页（最近先不打 + 搞怪小鸡）
 ├── coffee.html       「咖啡走起」咖啡店推荐页（表单收集，存浏览器 localStorage）
 ├── songs.html        「神仙歌品」站内歌单页（曲目数据为静态快照）
+├── dramas.html       「有点剧荒」私藏剧单（犯罪心理 / 神探夏洛克 + To be continued）
+├── kart.html         「卡丁车神」车神驾照 + 成就勋章墙
+├── kart-game.html    「挑战车神」起步反应赛小游戏（成绩存浏览器 localStorage）
 ├── works.html        作品集（支持按分类筛选）
 ├── blog.html         博客列表
 ├── about.html        关于我（名片 + 技能 + 时间线 + 联系方式）
